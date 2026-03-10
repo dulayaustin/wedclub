@@ -65,5 +65,5 @@ group :development do
   gem "web-console"
   gem "capybara"
   gem "shoulda-matchers"
-  gem "webdrivers", "~> 5.3", ">= 5.3.1", require: false
+  gem "webdrivers", "=5.3.1", require: false
 end
