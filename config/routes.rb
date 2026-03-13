@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   root "home#index"
 
   resources :guests
+  resources :guest_categories
 end

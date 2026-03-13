@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class Views::Guests::New < Views::Base
-  def initialize(guest:)
+  def initialize(guest:, categories:)
     @guest = guest
+    @categories = categories
   end
 
   def view_template
@@ -42,6 +43,32 @@ class Views::Guests::New < Views::Base
           )
           if @guest.errors[:last_name].any?
             FormFieldError { @guest.errors[:last_name].first }
+          end
+        end
+
+        FormField do
+          FormFieldLabel { "Category" }
+          div(class: "space-y-2 mt-1") do
+            label(class: "flex items-center gap-2 cursor-pointer") do
+              input(
+                type: :radio,
+                name: "guest[guest_category_id]",
+                value: "",
+                checked: @guest.guest_category.nil?
+              )
+              span { "None" }
+            end
+            @categories.each do |category|
+              label(class: "flex items-center gap-2 cursor-pointer") do
+                input(
+                  type: :radio,
+                  name: "guest[guest_category_id]",
+                  value: category.id,
+                  checked: @guest.guest_category&.id == category.id
+                )
+                span { category.name }
+              end
+            end
           end
         end
 

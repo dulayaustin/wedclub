@@ -17,6 +17,7 @@ class Views::Guests::Index < Views::Base
           TableRow do
             TableHead { "First Name" }
             TableHead { "Last Name" }
+            TableHead { "Category" }
           end
         end
         TableBody do
@@ -25,11 +26,12 @@ class Views::Guests::Index < Views::Base
               TableRow do
                 TableCell { guest.first_name }
                 TableCell { guest.last_name }
+                TableCell { guest.guest_category&.name }
               end
             end
           else
             TableRow do
-              TableCell(class: "text-center text-muted-foreground py-8", colspan: "2") do
+              TableCell(class: "text-center text-muted-foreground py-8", colspan: "3") do
                 "No guests yet. Add your first guest!"
               end
             end
