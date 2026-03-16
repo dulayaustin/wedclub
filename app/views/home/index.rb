@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class Views::Home::Index < Views::Base
+  def initialize(account:)
+    @account = account
+  end
+
   def view_template
     div(class: "min-h-screen bg-background flex flex-col") do
       nav(class: "border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60") do
@@ -19,13 +23,31 @@ class Views::Home::Index < Views::Base
         end
       end
 
-      # Hero
+      # Account creation
       div(class: "flex-1 flex flex-col items-center justify-center p-8") do
-        div(class: "text-center space-y-6 max-w-2xl") do
-          Heading(level: 1) { "Welcome to Our Wedding" }
-          Text(size: "lg", weight: "muted") { "We're so excited to celebrate with you!" }
-          div(class: "pt-2") do
-            Link(href: guests_path, variant: :primary, size: :lg) { "View Guest List" }
+        div(class: "w-full max-w-sm space-y-6") do
+          div(class: "text-center") do
+            Heading(level: 1) { "Create Your Account" }
+            Text(size: "sm", weight: "muted") { "Get started by creating an account." }
+          end
+
+          form(action: accounts_path, method: :post, class: "space-y-4") do
+            input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
+
+            FormField do
+              FormFieldLabel(for: "account_name") { "Account Name" }
+              Input(
+                id: "account_name",
+                type: :text,
+                name: "account[name]",
+                value: @account.name.to_s,
+                placeholder: "Enter account name",
+                required: true
+              )
+              FormFieldError { @account.errors[:name].first } if @account.errors[:name].any?
+            end
+
+            Button(type: :submit, variant: :primary, class: "w-full") { "Create Account" }
           end
         end
       end
