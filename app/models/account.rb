@@ -2,6 +2,7 @@ class Account < ApplicationRecord
   after_create :create_default_account_guest_category
 
   has_many :account_guest_categories, dependent: :destroy
+  has_many :guests, through: :account_guest_categories
 
   validates :name, presence: true
 

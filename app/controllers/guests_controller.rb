@@ -1,10 +1,12 @@
 class GuestsController < ApplicationController
+  before_action :require_account
+
   def index
-    render Views::Guests::Index.new(guests: Guest.includes(:account_guest_category).all)
+    render Views::Guests::Index.new(guests: current_account.guests)
   end
 
   def new
-    render Views::Guests::New.new(guest: Guest.new, categories: AccountGuestCategory.all)
+    render Views::Guests::New.new(guest: Guest.new, categories: current_account.account_guest_categories)
   end
 
   def create
@@ -14,7 +16,7 @@ class GuestsController < ApplicationController
     if guest.save
       redirect_to guests_path
     else
-      render Views::Guests::New.new(guest: guest, categories: AccountGuestCategory.all), status: :unprocessable_entity
+      render Views::Guests::New.new(guest: guest, categories: current_account.account_guest_categories), status: :unprocessable_entity
     end
   end
 

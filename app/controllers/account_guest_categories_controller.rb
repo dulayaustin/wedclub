@@ -1,6 +1,8 @@
 class AccountGuestCategoriesController < ApplicationController
+  before_action :require_account
+
   def index
-    render Views::AccountGuestCategories::Index.new(account_guest_categories: AccountGuestCategory.all)
+    render Views::AccountGuestCategories::Index.new(account_guest_categories: current_account.account_guest_categories)
   end
 
   def new
@@ -8,7 +10,7 @@ class AccountGuestCategoriesController < ApplicationController
   end
 
   def create
-    account_guest_category = AccountGuestCategory.new(account_guest_category_params)
+    account_guest_category = current_account.account_guest_categories.new(account_guest_category_params)
     if account_guest_category.save
       redirect_to account_guest_categories_path
     else
@@ -17,12 +19,12 @@ class AccountGuestCategoriesController < ApplicationController
   end
 
   def edit
-    account_guest_category = AccountGuestCategory.find(params[:id])
+    account_guest_category = current_account.account_guest_categories.find(params[:id])
     render Views::AccountGuestCategories::Edit.new(account_guest_category: account_guest_category)
   end
 
   def update
-    account_guest_category = AccountGuestCategory.find(params[:id])
+    account_guest_category = current_account.account_guest_categories.find(params[:id])
     if account_guest_category.update(account_guest_category_params)
       redirect_to account_guest_categories_path
     else
@@ -31,7 +33,7 @@ class AccountGuestCategoriesController < ApplicationController
   end
 
   def destroy
-    AccountGuestCategory.find(params[:id]).destroy
+    current_account.account_guest_categories.find(params[:id]).destroy
     redirect_to account_guest_categories_path
   end
 

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#index"
 
+  resource :account_session, only: [ :create, :destroy ]
   resources :accounts
   resources :guests
   resources :account_guest_categories

@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe AccountGuestCategory, type: :model do
+  describe 'associations' do
+    it { should belong_to(:account) }
+    it { should have_many(:guest_categories) }
+    it { should have_many(:guests) }
+  end
+
   describe 'validations' do
     subject { build(:account_guest_category) }
 
