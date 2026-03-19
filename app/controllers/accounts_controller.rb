@@ -17,7 +17,8 @@ class AccountsController < ApplicationController
     @account = Account.new(account_params)
     if @account.save
       @account.account_users.create!(user: current_user)
-      redirect_to accounts_path
+      set_account_session(@account)
+      redirect_to guests_path
     else
       render Views::Accounts::New.new(account: @account), status: :unprocessable_entity
     end
