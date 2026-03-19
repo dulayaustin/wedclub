@@ -1,4 +1,4 @@
-name: "wedding_app"
+name: "wedclub"
 
 services:
   rails-app:
@@ -7,7 +7,7 @@ services:
       dockerfile: .devcontainer/Dockerfile
 
     volumes:
-    - ../../wedding-app:/workspaces/wedding-app:cached
+    - ../../wedclub:/workspaces/wedclub:cached
 
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
