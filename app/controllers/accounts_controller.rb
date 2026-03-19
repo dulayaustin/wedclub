@@ -14,13 +14,12 @@ class AccountsController < ApplicationController
   end
 
   def create
-    @account = Account.new(account_params)
-    if @account.save
-      @account.account_users.create!(user: current_user)
-      set_account_session(@account)
+    result = Accounts::Create.new(user: current_user, params: account_params).call
+    if result.success?
+      set_account_session(result.account)
       redirect_to guests_path
     else
-      render Views::Accounts::New.new(account: @account), status: :unprocessable_entity
+      render Views::Accounts::New.new(account: result.account), status: :unprocessable_entity
     end
   end
 
