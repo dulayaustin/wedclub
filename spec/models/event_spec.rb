@@ -10,4 +10,11 @@ RSpec.describe Event, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:name) }
   end
+
+  describe 'after_create' do
+    let(:event) { create(:event) }
+    it 'creates default guest categories' do
+      expect(event.guest_categories.pluck(:name)).to match_array(GuestCategory::DEFAULT_CATEGORIES)
+    end
+  end
 end

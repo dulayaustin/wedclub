@@ -4,8 +4,8 @@ RSpec.describe Account, type: :model do
   describe 'associations' do
     it { should have_many(:account_users).dependent(:destroy) }
     it { should have_many(:users).through(:account_users) }
-    it { should have_many(:guest_categories).dependent(:destroy) }
-    it { should have_many(:guests).through(:guest_categories) }
+    it { should have_many(:events).dependent(:destroy) }
+    it { should have_many(:guests).through(:events) }
   end
 
   describe 'validations' do

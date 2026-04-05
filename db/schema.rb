@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_05_141819) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_05_143101) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,11 +50,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_05_141819) do
   create_table "guests", force: :cascade do |t|
     t.integer "age_group"
     t.datetime "created_at", null: false
+    t.bigint "event_id", null: false
     t.string "first_name", null: false
-    t.bigint "guest_category_id", null: false
+    t.bigint "guest_category_id"
     t.integer "guest_of"
     t.string "last_name", null: false
     t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_guests_on_event_id"
     t.index ["guest_category_id"], name: "index_guests_on_guest_category_id"
   end
 
@@ -76,4 +78,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_05_141819) do
   add_foreign_key "account_users", "users"
   add_foreign_key "events", "accounts"
   add_foreign_key "guest_categories", "events"
+  add_foreign_key "guests", "events"
 end
