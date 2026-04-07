@@ -11,6 +11,11 @@ RSpec.describe Event, type: :model do
     it { should validate_presence_of(:name) }
   end
 
+  describe 'attributes' do
+    it { should respond_to(:venue) }
+    it { should respond_to(:theme) }
+  end
+
   describe 'after_create' do
     let(:event) { create(:event) }
     it 'creates default guest categories' do

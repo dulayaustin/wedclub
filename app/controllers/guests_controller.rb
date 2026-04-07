@@ -1,20 +1,21 @@
 class GuestsController < ApplicationController
   before_action :require_account
+  before_action :require_event
 
   def index
-    render Views::Guests::Index.new(guests: current_account.guests)
+    render Views::Guests::Index.new(guests: current_event.guests)
   end
 
   def new
-    render Views::Guests::New.new(guest: Guest.new, categories: current_account.guest_categories)
+    render Views::Guests::New.new(guest: Guest.new, categories: current_event.guest_categories)
   end
 
   def create
-    guest = Guest.new(guest_params)
+    guest = current_event.guests.new(guest_params)
     if guest.save
       redirect_to guests_path
     else
-      render Views::Guests::New.new(guest: guest, categories: current_account.guest_categories), status: :unprocessable_entity
+      render Views::Guests::New.new(guest: guest, categories: current_event.guest_categories), status: :unprocessable_entity
     end
   end
 
@@ -25,7 +26,7 @@ class GuestsController < ApplicationController
       :first_name, :last_name, :age_group, :guest_of, :guest_category_id
     )
     cat_id = permitted[:guest_category_id]
-    permitted.delete(:guest_category_id) if cat_id.present? && !current_account.guest_categories.exists?(cat_id.to_i)
+    permitted.delete(:guest_category_id) if cat_id.present? && !current_event.guest_categories.exists?(cat_id.to_i)
     permitted
   end
 end

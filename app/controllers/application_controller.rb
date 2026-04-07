@@ -9,9 +9,15 @@ class ApplicationController < ActionController::Base
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
 
-  helper_method :current_account
+  helper_method :current_account, :current_event
 
   def after_sign_in_path_for(_resource)
-    accounts_path
+    if current_account&.events&.any?
+      event = current_account.events.first
+      set_event_session(event)
+      event_path(event)
+    else
+      accounts_path
+    end
   end
 end

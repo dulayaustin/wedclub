@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class Views::Users::Registrations::New < Views::Base
-  def initialize(user:)
+  def initialize(user:, account:, event:)
     @user = user
+    @account = account
+    @event = event
   end
 
   def view_template
@@ -12,8 +14,10 @@ class Views::Users::Registrations::New < Views::Base
         Heading(level: 1) { "Sign Up" }
       end
 
-      form(action: user_registration_path, method: :post, class: "space-y-4") do
+      form(action: user_registration_path, method: :post, class: "space-y-6") do
         input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
+
+        Heading(level: 2) { "Your Profile" }
 
         FormField do
           FormFieldLabel(for: "user_first_name") { "First Name" }
@@ -43,6 +47,21 @@ class Views::Users::Registrations::New < Views::Base
           FormFieldLabel(for: "user_password_confirmation") { "Password Confirmation" }
           Input(id: "user_password_confirmation", type: :password, name: "user[password_confirmation]", required: true)
           FormFieldError { @user.errors[:password_confirmation].first } if @user.errors[:password_confirmation].any?
+        end
+
+        Heading(level: 2) { "Your Event" }
+
+        FormField do
+          FormFieldLabel(for: "event_name") { "Event Name" }
+          Input(id: "event_name", type: :text, name: "event[name]", value: @event.name.to_s, placeholder: "Smith & Jones Wedding", required: true)
+          FormFieldError { @event.errors[:name].first } if @event.errors[:name].any?
+          FormFieldError { @account.errors[:name].first } if @account.errors[:name].any?
+        end
+
+        FormField do
+          FormFieldLabel(for: "event_event_date") { "Event Date (optional)" }
+          Input(id: "event_event_date", type: :date, name: "event[event_date]", value: @event.event_date&.to_date&.to_s)
+          FormFieldError { @event.errors[:event_date].first } if @event.errors[:event_date].any?
         end
 
         Button(type: :submit, variant: :primary, class: "w-full") { "Sign Up" }

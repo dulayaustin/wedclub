@@ -6,6 +6,7 @@ RSpec.describe Account, type: :model do
     it { should have_many(:users).through(:account_users) }
     it { should have_many(:events).dependent(:destroy) }
     it { should have_many(:guests).through(:events) }
+    it { should have_many(:guest_categories).through(:events) }
   end
 
   describe 'validations' do

@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   resource :account_session, only: [ :create, :destroy ]
   resources :accounts
+  resources :events, only: [ :show, :edit, :update ]
   resources :guests
   resources :guest_categories
 end

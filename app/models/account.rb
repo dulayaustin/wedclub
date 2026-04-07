@@ -12,6 +12,7 @@ class Account < ApplicationRecord
   has_many :users, through: :account_users
   has_many :events, dependent: :destroy
   has_many :guests, through: :events
+  has_many :guest_categories, through: :events
 
   validates :name, presence: true
 end

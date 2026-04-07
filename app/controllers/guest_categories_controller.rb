@@ -1,9 +1,10 @@
 class GuestCategoriesController < ApplicationController
   before_action :require_account
+  before_action :require_event
   before_action :set_guest_category, only: [ :edit, :update, :destroy ]
 
   def index
-    render Views::GuestCategories::Index.new(guest_categories: current_account.guest_categories)
+    render Views::GuestCategories::Index.new(guest_categories: current_event.guest_categories)
   end
 
   def new
@@ -11,7 +12,7 @@ class GuestCategoriesController < ApplicationController
   end
 
   def create
-    guest_category = current_account.guest_categories.new(guest_category_params)
+    guest_category = current_event.guest_categories.new(guest_category_params)
     if guest_category.save
       redirect_to guest_categories_path
     else
@@ -43,7 +44,7 @@ class GuestCategoriesController < ApplicationController
   end
 
   def set_guest_category
-    @guest_category = current_account.guest_categories.find_by(id: params[:id])
+    @guest_category = current_event.guest_categories.find_by(id: params[:id])
     redirect_to home_path, alert: "Guest category cannot be found" unless @guest_category.present?
   end
 end
