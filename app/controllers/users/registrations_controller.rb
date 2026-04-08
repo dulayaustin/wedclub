@@ -12,9 +12,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def create
     result = Registrations::Create.new(
-      user_params:    sign_up_params,
-      account_params: account_params,
-      event_params:   event_params
+      user_params:         sign_up_params,
+      account_params:      account_params,
+      event_params:        event_params,
+      account_user_params: account_user_params
     ).call
 
     if result.success?
@@ -26,7 +27,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       self.resource = result.user
       render Views::Users::Registrations::New.new(
-        user: result.user, account: result.account, event: result.event
+        user: result.user, account: result.account, event: result.event, account_user: result.account_user
       ), status: :unprocessable_entity
     end
   end
@@ -45,5 +46,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def event_params
     params.require(:event).permit(:title, :event_date)
+  end
+
+  def account_user_params
+    params.require(:account_user).permit(:role)
   end
 end

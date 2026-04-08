@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class Views::Users::Registrations::New < Views::Base
-  def initialize(user:, account:, event:)
+  def initialize(user:, account:, event:, account_user: AccountUser.new)
     @user = user
     @account = account
     @event = event
+    @account_user = account_user
   end
 
   def view_template
@@ -47,6 +48,19 @@ class Views::Users::Registrations::New < Views::Base
           FormFieldLabel(for: "user_password_confirmation") { "Password Confirmation" }
           Input(id: "user_password_confirmation", type: :password, name: "user[password_confirmation]", required: true)
           FormFieldError { @user.errors[:password_confirmation].first } if @user.errors[:password_confirmation].any?
+        end
+
+        FormField do
+          FormFieldLabel { "Your Role" }
+          div(class: "flex gap-4") do
+            [ ["coordinator", "Coordinator"], ["bride", "Bride"], ["groom", "Groom"] ].each do |value, label|
+              div(class: "flex items-center gap-2") do
+                input(type: :radio, id: "account_user_role_#{value}", name: "account_user[role]", value: value, required: true)
+                label(for: "account_user_role_#{value}") { label }
+              end
+            end
+          end
+          FormFieldError { @account_user.errors[:role].first } if @account_user.errors[:role].any?
         end
 
         Heading(level: 2) { "Your Event" }
