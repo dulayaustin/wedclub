@@ -20,8 +20,8 @@ class Views::Layouts::Sidebar::Event < Views::Base
         div(class: "h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold") { "W" }
         span(class: "font-semibold") { "Wed Club" }
       end
-      if helpers.current_event
-        p(class: "mt-2 text-xs text-muted-foreground truncate") { helpers.current_event.title }
+      if current_event
+        p(class: "mt-2 text-xs text-muted-foreground truncate") { current_event.title }
       end
     end
   end
@@ -30,8 +30,8 @@ class Views::Layouts::Sidebar::Event < Views::Base
     nav(class: "flex-1 p-3 space-y-1") do
       p(class: "px-3 pt-2 pb-1 text-xs font-medium text-muted-foreground uppercase tracking-wider") { "Event" }
 
-      if helpers.current_event
-        nav_link(href: event_path(helpers.current_event), label: "Overview", exact: true)
+      if current_event
+        nav_link(href: event_path(current_event), label: "Overview", exact: true)
       end
       nav_link(href: guests_path, label: "Guests")
       nav_link(href: guest_categories_path, label: "Guest Categories")
@@ -40,8 +40,8 @@ class Views::Layouts::Sidebar::Event < Views::Base
 
       p(class: "px-3 pb-1 text-xs font-medium text-muted-foreground uppercase tracking-wider") { "Account" }
 
-      if helpers.current_event
-        nav_link(href: edit_event_path(helpers.current_event), label: "Edit Event")
+      if current_event
+        nav_link(href: edit_event_path(current_event), label: "Edit Event")
       end
       nav_link(href: events_path, label: "Switch Event")
     end
@@ -50,7 +50,7 @@ class Views::Layouts::Sidebar::Event < Views::Base
   def render_footer
     div(class: "p-3 border-t border-border") do
       div(class: "flex items-center justify-between px-2 mb-2") do
-        span(class: "text-sm font-medium truncate") { helpers.current_user&.first_name }
+        span(class: "text-sm font-medium truncate") { current_user&.first_name }
       end
       form(action: destroy_user_session_path, method: :post, class: "w-full") do
         input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
@@ -62,9 +62,9 @@ class Views::Layouts::Sidebar::Event < Views::Base
 
   def nav_link(href:, label:, exact: false)
     current = if exact
-      helpers.request.path == href
+      request.path == href
     else
-      helpers.request.path == href || helpers.request.path.start_with?("#{href}/")
+      request.path == href || request.path.start_with?("#{href}/")
     end
     classes = "flex items-center px-3 py-2 text-sm rounded-md no-underline transition-colors "
     classes += if current

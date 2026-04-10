@@ -25,19 +25,19 @@ class Views::Layouts::Sidebar::Account < Views::Base
 
   def render_nav
     nav(class: "flex-1 p-3 space-y-1") do
-      if helpers.current_account
-        p(class: "px-3 pt-2 pb-1 text-xs font-medium text-muted-foreground uppercase tracking-wider") { helpers.current_account.name }
+      if current_account
+        p(class: "px-3 pt-2 pb-1 text-xs font-medium text-muted-foreground uppercase tracking-wider") { current_account.name }
       end
 
       nav_link(href: accounts_path, label: "Accounts")
-      nav_link(href: events_path, label: "Events") if helpers.current_account
+      nav_link(href: events_path, label: "Events") if current_account
     end
   end
 
   def render_footer
     div(class: "p-3 border-t border-border") do
       div(class: "flex items-center justify-between px-2 mb-2") do
-        span(class: "text-sm font-medium truncate") { helpers.current_user&.first_name }
+        span(class: "text-sm font-medium truncate") { current_user&.first_name }
       end
       form(action: destroy_user_session_path, method: :post, class: "w-full") do
         input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
@@ -48,7 +48,7 @@ class Views::Layouts::Sidebar::Account < Views::Base
   end
 
   def nav_link(href:, label:)
-    current = helpers.request.path == href || helpers.request.path.start_with?("#{href}/")
+    current = request.path == href || request.path.start_with?("#{href}/")
     classes = "flex items-center px-3 py-2 text-sm rounded-md no-underline transition-colors "
     classes += if current
       "bg-accent text-accent-foreground font-medium"

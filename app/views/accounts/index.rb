@@ -23,7 +23,7 @@ class Views::Accounts::Index < Views::Base
         TableBody do
           if @accounts.any?
             @accounts.each do |account|
-              active = helpers.current_account&.id == account.id
+              active = current_account&.id == account.id
               TableRow(class: active ? "bg-muted/50" : nil) do
                 TableCell do
                   div(class: "flex items-center gap-2") do
