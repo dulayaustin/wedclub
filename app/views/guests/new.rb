@@ -8,15 +8,14 @@ class Views::Guests::New < Views::Base
 
   def view_template
     render Views::Layouts::Sidebar::Event.new do
-      div(class: "max-w-md") do
-        div(class: "mb-6 flex items-center gap-4") do
-          Link(href: guests_path, variant: :ghost, size: :sm) { "← Back" }
-          Heading(level: 1) { "Add Guest" }
-        end
+      div(class: "flex items-center justify-between gap-4 mb-6 ") do
+        Heading(level: 1) { "Add Guest" }
+      end
 
-        Form(action: guests_path, method: :post, class: "space-y-4") do
-          input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
+      Form(action: guests_path, method: :post, class: "space-y-4") do
+        input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
 
+        div(class: "grid grid-cols-2 gap-4") do
           FormField do
             FormFieldLabel(for: "guest_first_name") { "First Name" }
             Input(
@@ -42,7 +41,9 @@ class Views::Guests::New < Views::Base
             )
             FormFieldError { @guest.errors[:last_name].first } if @guest.errors[:last_name].any?
           end
+        end
 
+        div(class: "grid grid-cols-2 gap-4") do
           FormField do
             FormFieldLabel { "Age Group" }
             Select do
@@ -78,27 +79,27 @@ class Views::Guests::New < Views::Base
             end
             FormFieldError { @guest.errors[:guest_of].first } if @guest.errors[:guest_of].any?
           end
+        end
 
-          FormField do
-            FormFieldLabel { "Category" }
-            Select do
-              SelectInput(name: "guest[guest_category_id]", value: @guest.guest_category_id.to_s, id: "guest_category")
-              SelectTrigger do
-                SelectValue(placeholder: "Select a category", id: "guest_category") { @guest.guest_category&.name }
-              end
-              SelectContent(outlet_id: "guest_category") do
-                SelectGroup do
-                  @categories.each do |category|
-                    SelectItem(value: category.id.to_s) { category.name }
-                  end
+        FormField do
+          FormFieldLabel { "Category" }
+          Select do
+            SelectInput(name: "guest[guest_category_id]", value: @guest.guest_category_id.to_s, id: "guest_category")
+            SelectTrigger do
+              SelectValue(placeholder: "Select a category", id: "guest_category") { @guest.guest_category&.name }
+            end
+            SelectContent(outlet_id: "guest_category") do
+              SelectGroup do
+                @categories.each do |category|
+                  SelectItem(value: category.id.to_s) { category.name }
                 end
               end
             end
-            FormFieldError { @guest.errors[:guest_category].first } if @guest.errors[:guest_category].any?
           end
-
-          Button(type: :submit, variant: :primary, class: "w-full") { "Add Guest" }
+          FormFieldError { @guest.errors[:guest_category].first } if @guest.errors[:guest_category].any?
         end
+
+        Button(type: :submit, variant: :primary, class: "w-full") { "Add Guest" }
       end
     end
   end
