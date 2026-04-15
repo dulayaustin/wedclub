@@ -9,3 +9,7 @@ pin "@floating-ui/dom", to: "@floating-ui--dom.js" # @1.7.5
 pin "@floating-ui/core", to: "@floating-ui--core.js" # @1.7.5
 pin "@floating-ui/utils", to: "@floating-ui--utils.js" # @0.2.11
 pin "@floating-ui/utils/dom", to: "@floating-ui--utils--dom.js" # @0.2.11
+pin "motion" # @12.38.0
+pin "framer-motion/dom", to: "framer-motion--dom.js" # @12.38.0
+pin "motion-dom" # @12.38.0
+pin "motion-utils" # @12.36.0
