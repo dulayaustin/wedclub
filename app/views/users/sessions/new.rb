@@ -11,7 +11,7 @@ class Views::Users::Sessions::New < Views::Base
         Heading(level: 1) { "Sign In" }
       end
 
-      form(action: user_session_path, method: :post, class: "space-y-4") do
+      Form(action: user_session_path, method: :post, class: "space-y-4") do
         input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
 
         FormField do

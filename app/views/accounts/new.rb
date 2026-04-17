@@ -13,7 +13,7 @@ class Views::Accounts::New < Views::Base
           Heading(level: 1) { "New Account" }
         end
 
-        form(action: accounts_path, method: :post, class: "space-y-4") do
+        Form(action: accounts_path, method: :post, class: "space-y-4") do
           input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
 
           FormField do

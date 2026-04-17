@@ -11,7 +11,7 @@ class Views::GuestCategories::Edit < Views::Base
         Heading(level: 1) { "Edit Category" }
       end
 
-      form(action: guest_category_path(@guest_category), method: :post, class: "space-y-4") do
+      Form(action: guest_category_path(@guest_category), method: :post, class: "space-y-4") do
         input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
         input(type: :hidden, name: "_method", value: "patch")
 

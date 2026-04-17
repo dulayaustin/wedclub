@@ -35,14 +35,14 @@ class Views::Accounts::Index < Views::Base
                 TableCell do
                   div(class: "flex items-center gap-2") do
                     unless active
-                      form(action: account_session_path, method: :post) do
+                      Form(action: account_session_path, method: :post) do
                         input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
                         input(type: :hidden, name: "account_id", value: account.id)
                         Button(type: :submit, variant: :outline, size: :sm) { "Select" }
                       end
                     end
                     Link(href: edit_account_path(account), variant: :ghost, size: :sm) { "Edit" }
-                    form(action: account_path(account), method: :post,
+                    Form(action: account_path(account), method: :post,
                          id: "delete-account-#{account.id}", style: "display:none") do
                       input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
                       input(type: :hidden, name: "_method", value: "delete")

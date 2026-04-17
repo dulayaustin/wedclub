@@ -11,7 +11,7 @@ class Views::GuestCategories::New < Views::Base
         Heading(level: 1) { "Add Category" }
       end
 
-      form(action: guest_categories_path, method: :post, class: "space-y-4") do
+      Form(action: guest_categories_path, method: :post, class: "space-y-4") do
         input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
 
         FormField do

@@ -42,7 +42,7 @@ class Views::Layouts::Sidebar::Account < Views::Base
         end
         span(class: "text-sm font-medium truncate") { current_user&.first_name }
       end
-      form(action: destroy_user_session_path, method: :post, class: "w-full") do
+      Form(action: destroy_user_session_path, method: :post, class: "w-full") do
         input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
         input(type: :hidden, name: "_method", value: "delete")
         Button(type: :submit, variant: :ghost, size: :sm, class: "w-full justify-start text-muted-foreground") { "Sign Out" }

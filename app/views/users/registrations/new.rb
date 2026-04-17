@@ -15,7 +15,7 @@ class Views::Users::Registrations::New < Views::Base
         Heading(level: 1) { "Sign Up" }
       end
 
-      form(action: user_registration_path, method: :post, class: "space-y-6") do
+      Form(action: user_registration_path, method: :post, class: "space-y-6") do
         input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
 
         Heading(level: 2) { "Your Profile" }

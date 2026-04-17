@@ -13,7 +13,7 @@ class Views::Accounts::Edit < Views::Base
           Heading(level: 1) { "Edit Account" }
         end
 
-        form(action: account_path(@account), method: :post, class: "space-y-4") do
+        Form(action: account_path(@account), method: :post, class: "space-y-4") do
           input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
           input(type: :hidden, name: "_method", value: "patch")
 

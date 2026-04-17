@@ -14,7 +14,7 @@ class Views::Accounts::Show < Views::Base
 
       div(class: "flex gap-2") do
         Link(href: edit_account_path(@account), variant: :primary, size: :sm) { "Edit" }
-        form(action: account_path(@account), method: :post) do
+        Form(action: account_path(@account), method: :post) do
           input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
           input(type: :hidden, name: "_method", value: "delete")
           Button(type: :submit, variant: :ghost, size: :sm) { "Delete" }

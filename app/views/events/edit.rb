@@ -11,7 +11,7 @@ class Views::Events::Edit < Views::Base
         Heading(level: 1) { "Edit Event" }
       end
 
-      form(action: event_path(@event), method: :post, class: "space-y-4") do
+      Form(action: event_path(@event), method: :post, class: "space-y-4") do
         input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
         input(type: :hidden, name: "_method", value: "patch")
 

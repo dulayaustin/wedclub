@@ -27,7 +27,7 @@ class Views::GuestCategories::Index < Views::Base
                 TableCell do
                   div(class: "flex items-center gap-2") do
                     Link(href: edit_guest_category_path(category), variant: :ghost, size: :sm) { "Edit" }
-                    form(action: guest_category_path(category), method: :post,
+                    Form(action: guest_category_path(category), method: :post,
                          id: "delete-category-#{category.id}", style: "display:none") do
                       input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
                       input(type: :hidden, name: "_method", value: "delete")
