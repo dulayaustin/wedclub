@@ -24,24 +24,6 @@
   </head>
 
   <body>
-    <% if notice.present? %>
-      <div class="container mx-auto px-4 pt-4">
-        <%= render RubyUI::Alert.new(variant: :success) do %>
-          <%= render RubyUI::AlertDescription.new do %>
-            <%= notice %>
-          <% end %>
-        <% end %>
-      </div>
-    <% end %>
-    <% if alert.present? %>
-      <div class="container mx-auto px-4 pt-4">
-        <%= render RubyUI::Alert.new(variant: :destructive) do %>
-          <%= render RubyUI::AlertDescription.new do %>
-            <%= alert %>
-          <% end %>
-        <% end %>
-      </div>
-    <% end %>
     <main>
       <%= yield %>
     </main>

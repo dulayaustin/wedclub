@@ -1,6 +1,7 @@
 class GuestsController < ApplicationController
   before_action :require_account
   before_action :require_event
+  before_action :set_guest, only: [ :edit, :update, :destroy ]
 
   def index
     render Views::Guests::Index.new(guests: current_event.guests)
@@ -19,7 +20,29 @@ class GuestsController < ApplicationController
     end
   end
 
+  def edit
+    render Views::Guests::Edit.new(guest: @guest, categories: current_event.guest_categories)
+  end
+
+  def update
+    if @guest.update(guest_params)
+      redirect_to guests_path, notice: "Guest updated."
+    else
+      render Views::Guests::Edit.new(guest: @guest, categories: current_event.guest_categories), status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @guest.destroy
+    redirect_to guests_path, notice: "Guest deleted."
+  end
+
   private
+
+  def set_guest
+    @guest = current_event.guests.find_by(id: params[:id])
+    redirect_to guests_path, alert: "Guest not found." unless @guest
+  end
 
   def guest_params
     permitted = params.expect(guest: [ :first_name, :last_name, :age_group, :guest_of, :guest_category_id ])

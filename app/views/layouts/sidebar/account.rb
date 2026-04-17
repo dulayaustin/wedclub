@@ -8,7 +8,10 @@ class Views::Layouts::Sidebar::Account < Views::Base
         render_nav
         render_footer
       end
-      div(class: "flex-1 overflow-auto p-8") { yield }
+      div(class: "flex-1 overflow-auto p-8") do
+        render_flash
+        yield
+      end
     end
   end
 

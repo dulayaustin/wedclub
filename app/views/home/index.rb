@@ -12,6 +12,40 @@ class Views::Home::Index < Views::Base
       Separator(class: "mb-6")
 
       if current_account
+        upcoming = current_account.events.select { |e| e.event_date&.future? }.min_by(&:event_date)
+
+        if upcoming
+          div(class: "bg-card border border-border rounded-lg p-6 mb-6") do
+            div(class: "flex items-center justify-between") do
+              div do
+                Text(class: "text-xs text-muted-foreground uppercase tracking-wider mb-1") { "Next Event" }
+                Heading(level: 2, class: "mb-1") { upcoming.title }
+                Text(class: "text-muted-foreground text-sm") { upcoming.event_date.strftime("%B %-d, %Y") }
+              end
+              Link(href: event_path(upcoming), variant: :outline, size: :sm) { "Open Event" }
+            end
+          end
+        end
+
+        div(class: "grid grid-cols-3 gap-4 mb-6") do
+          div(class: "bg-card border border-border rounded-lg p-5 text-center") do
+            div(class: "text-2xl font-bold") { current_account.events.size.to_s }
+            Text(class: "text-sm text-muted-foreground mt-1") { "Events" }
+          end
+          if current_event
+            div(class: "bg-card border border-border rounded-lg p-5 text-center") do
+              div(class: "text-2xl font-bold") { current_event.guests.count.to_s }
+              Text(class: "text-sm text-muted-foreground mt-1") { "Guests" }
+            end
+            div(class: "bg-card border border-border rounded-lg p-5 text-center") do
+              div(class: "text-2xl font-bold") { current_event.guest_categories.count.to_s }
+              Text(class: "text-sm text-muted-foreground mt-1") { "Categories" }
+            end
+          end
+        end
+
+        Separator(class: "mb-6")
+
         div(class: "space-y-4") do
           Heading(level: 2) { "Quick Actions" }
           div(class: "flex gap-3") do

@@ -7,7 +7,7 @@ RSpec.describe "Sessions", type: :system do
     before { visit new_user_session_path }
 
     it "loads the sign-in page" do
-      expect(page).to have_css("h1", text: "Sign In")
+      expect(page).to have_css("h1", text: "Welcome back")
     end
 
     it "has email and password fields" do

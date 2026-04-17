@@ -12,6 +12,7 @@ class Views::Users::Passwords::New < Views::Base
         Heading(level: 1) { "Forgot Password" }
       end
 
+      render_flash
       Form(action: user_password_path, method: :post, class: "space-y-4") do
         input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
 

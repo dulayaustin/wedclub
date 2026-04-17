@@ -5,7 +5,7 @@ RSpec.describe "Registrations", type: :system do
     before { visit new_user_registration_path }
 
     it "loads the sign-up page" do
-      expect(page).to have_css("h1", text: "Sign Up")
+      expect(page).to have_css("h1", text: "Create your account")
     end
 
     it "has Your Profile and Your Event subheadings" do
