@@ -19,7 +19,21 @@ class Views::Events::Form < Views::Base
 
         FormField do
           FormFieldLabel(for: "event_event_date") { "Event Date" }
-          Input(id: "event_event_date", type: :date, name: "event[event_date]", value: @event.event_date&.to_date&.to_s)
+          Popover(options: { trigger: "click" }) do
+            PopoverTrigger(class: "w-full") do
+              Input(
+                type: :string,
+                placeholder: "Select a date",
+                id: "event_event_date",
+                name: "event[event_date]",
+                value: @event.event_date&.to_date&.to_s,
+                data_controller: "ruby-ui--calendar-input"
+              )
+            end
+            PopoverContent do
+              Calendar(input_id: "#event_event_date", selected_date: @event.event_date&.to_date)
+            end
+          end
           FormFieldError { @event.errors[:event_date].first } if @event.errors[:event_date].any?
         end
       end
