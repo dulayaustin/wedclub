@@ -45,6 +45,12 @@ class Views::Layouts::Sidebar::Account < Views::Base
               end
             end
           end
+          SidebarMenuItem do
+            SidebarMenuButton(as: :a, href: venues_path, active: active_link?(venues_path)) do
+              heroicon "map-pin", variant: :outline, options: { class: "size-4" }
+              span { "Venues" }
+            end
+          end
         end
       end
     end

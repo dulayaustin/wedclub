@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_27_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_27_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -74,6 +74,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_27_000001) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "venues", force: :cascade do |t|
+    t.text "address_line1"
+    t.text "address_line2"
+    t.string "city"
+    t.string "country"
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.text "notes"
+    t.string "phone_number"
+    t.string "state"
+    t.datetime "updated_at", null: false
+    t.integer "venue_type", null: false
+    t.string "website"
+    t.index ["name"], name: "index_venues_on_name"
   end
 
   add_foreign_key "account_users", "accounts"

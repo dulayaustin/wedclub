@@ -22,4 +22,5 @@ Rails.application.routes.draw do
   resources :events, only: [ :index, :show, :edit, :update ]
   resources :guests
   resources :guest_categories
+  resources :venues
 end
