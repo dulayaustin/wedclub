@@ -5,7 +5,7 @@ RSpec.describe "Events", type: :system do
   let!(:account) { create(:account).tap { |a| a.account_users.create!(user: user) } }
   let!(:event) do
     create(:event, account: account, title: "Smith & Jones Wedding",
-           event_date: Date.new(2026, 6, 15), venue: "Grand Hall", theme: "Black Tie")
+           event_date: Date.new(2026, 6, 15), theme: "Black Tie")
   end
 
   before do
@@ -44,10 +44,6 @@ RSpec.describe "Events", type: :system do
       expect(page).to have_text("June 15, 2026")
     end
 
-    it "displays the venue" do
-      expect(page).to have_text("Grand Hall")
-    end
-
     it "displays the theme" do
       expect(page).to have_text("Black Tie")
     end
@@ -55,11 +51,10 @@ RSpec.describe "Events", type: :system do
     context "with no optional fields" do
       let!(:event) { create(:event, account: account, title: "Minimal Event", event_date: nil) }
 
-      it "omits the date, venue, and theme lines" do
+      it "omits the date and theme lines" do
         visit event_path(event)
 
         expect(page).not_to have_text("Date:")
-        expect(page).not_to have_text("Venue:")
         expect(page).not_to have_text("Theme:")
       end
     end
@@ -74,7 +69,6 @@ RSpec.describe "Events", type: :system do
 
     it "pre-fills the event fields" do
       expect(page).to have_field("event_title", with: "Smith & Jones Wedding")
-      expect(page).to have_field("event_venue", with: "Grand Hall")
       expect(page).to have_field("event_theme", with: "Black Tie")
     end
 
@@ -85,7 +79,6 @@ RSpec.describe "Events", type: :system do
     context "with valid data" do
       it "updates the event and redirects to event show" do
         fill_in "event_title", with: "Updated Wedding"
-        fill_in "event_venue", with: "New Venue"
         click_button "Save Changes"
 
         expect(page).to have_current_path(event_path(event))

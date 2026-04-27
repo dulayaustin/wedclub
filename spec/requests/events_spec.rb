@@ -43,10 +43,9 @@ RSpec.describe "Events", type: :request do
   describe "PATCH /events/:id" do
     it "updates the event and redirects" do
       patch event_path(event),
-        params: { event: { title: "Updated Name", venue: "Grand Hall", theme: "Black Tie" } }
+        params: { event: { title: "Updated Name", theme: "Black Tie" } }
       expect(response).to redirect_to(event_path(event))
       expect(event.reload.title).to eq("Updated Name")
-      expect(event.venue).to eq("Grand Hall")
       expect(event.theme).to eq("Black Tie")
     end
 

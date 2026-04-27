@@ -12,7 +12,6 @@ RSpec.describe Event, type: :model do
   end
 
   describe 'attributes' do
-    it { should respond_to(:venue) }
     it { should respond_to(:theme) }
   end
 

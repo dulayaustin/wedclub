@@ -38,18 +38,10 @@ class Views::Events::Form < Views::Base
         end
       end
 
-      div(class: "grid grid-cols-2 gap-4") do
-        FormField do
-          FormFieldLabel(for: "event_venue") { "Venue" }
-          Input(id: "event_venue", type: :text, name: "event[venue]", value: @event.venue.to_s)
-          FormFieldError { @event.errors[:venue].first } if @event.errors[:venue].any?
-        end
-
-        FormField do
-          FormFieldLabel(for: "event_theme") { "Theme" }
-          Input(id: "event_theme", type: :text, name: "event[theme]", value: @event.theme.to_s)
-          FormFieldError { @event.errors[:theme].first } if @event.errors[:theme].any?
-        end
+      FormField do
+        FormFieldLabel(for: "event_theme") { "Theme" }
+        Input(id: "event_theme", type: :text, name: "event[theme]", value: @event.theme.to_s)
+        FormFieldError { @event.errors[:theme].first } if @event.errors[:theme].any?
       end
 
       Button(type: :submit, variant: :primary, class: "w-full") { submit_label }

@@ -27,18 +27,12 @@ class Views::Events::Show < Views::Base
 
       div(class: "bg-card border border-border rounded-lg p-6") do
         Heading(level: 2, class: "mb-4") { "Event Details" }
-        if @event.event_date.present? || @event.venue.present? || @event.theme.present?
+        if @event.event_date.present? || @event.theme.present?
           div(class: "divide-y divide-border") do
             if @event.event_date.present?
               div(class: "flex justify-between items-center py-3") do
                 Text(class: "text-sm text-muted-foreground") { "Date" }
                 Text(class: "text-sm font-medium") { @event.event_date.strftime("%B %-d, %Y") }
-              end
-            end
-            if @event.venue.present?
-              div(class: "flex justify-between items-center py-3") do
-                Text(class: "text-sm text-muted-foreground") { "Venue" }
-                Text(class: "text-sm font-medium") { @event.venue }
               end
             end
             if @event.theme.present?
