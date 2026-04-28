@@ -24,6 +24,7 @@ class Event < ApplicationRecord
   belongs_to :account
   has_many :guests, dependent: :destroy
   has_many :guest_categories, dependent: :destroy
+  has_many :event_venues, dependent: :destroy
 
   validates :title, presence: true
 

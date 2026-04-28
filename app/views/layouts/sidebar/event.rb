@@ -54,6 +54,12 @@ class Views::Layouts::Sidebar::Event < Views::Base
               span { "Guest Categories" }
             end
           end
+          SidebarMenuItem do
+            SidebarMenuButton(as: :a, href: event_venues_path, active: active_link?(event_venues_path)) do
+              heroicon "map-pin", variant: :outline, options: { class: "size-4" }
+              span { "Venues" }
+            end
+          end
         end
       end
     end

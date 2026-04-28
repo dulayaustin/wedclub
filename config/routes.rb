@@ -23,4 +23,5 @@ Rails.application.routes.draw do
   resources :guests
   resources :guest_categories
   resources :venues
+  resources :event_venues
 end

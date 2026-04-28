@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_27_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_28_135803) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,6 +29,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_27_120000) do
     t.datetime "created_at", null: false
     t.string "name", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "event_venues", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "end_at"
+    t.bigint "event_id", null: false
+    t.text "notes"
+    t.integer "role", null: false
+    t.datetime "start_at"
+    t.datetime "updated_at", null: false
+    t.bigint "venue_id", null: false
+    t.index ["event_id", "role"], name: "index_event_venues_on_event_id_and_role", unique: true
+    t.index ["event_id"], name: "index_event_venues_on_event_id"
+    t.index ["venue_id"], name: "index_event_venues_on_venue_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -94,6 +108,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_27_120000) do
 
   add_foreign_key "account_users", "accounts"
   add_foreign_key "account_users", "users"
+  add_foreign_key "event_venues", "events"
+  add_foreign_key "event_venues", "venues"
   add_foreign_key "events", "accounts"
   add_foreign_key "guest_categories", "events"
   add_foreign_key "guests", "events"
