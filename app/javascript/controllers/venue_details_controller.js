@@ -60,6 +60,25 @@ export default class extends Controller {
     this.newVenuePanelTarget.classList.remove("hidden")
   }
 
+  handleSearchInput(event) {
+    const input = event.target
+    if (input.dataset.rubyUiComboboxTarget !== 'searchInput') return
+    if (input.value.trim() !== '') return
+
+    this.panelTarget.classList.add('hidden')
+    this.newVenuePanelTarget.classList.add('hidden')
+
+    this.element
+      .querySelectorAll("input[type='radio'][name='event_venue[venue_id]']")
+      .forEach(radio => { radio.checked = false })
+
+    const trigger        = this.element.querySelector("[data-ruby-ui--combobox-target='trigger']")
+    const triggerContent = this.element.querySelector("[data-ruby-ui--combobox-target='triggerContent']")
+    if (trigger && triggerContent) {
+      triggerContent.innerText = trigger.dataset.placeholder
+    }
+  }
+
   _populate(dataset) {
     this.nameTarget.textContent          = dataset.venueName         || ""
     this.typeTarget.textContent          = dataset.venueType         || ""

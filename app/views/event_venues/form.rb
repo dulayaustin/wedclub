@@ -12,7 +12,7 @@ class Views::EventVenues::Form < Views::Base
       input(type: :hidden, name: "authenticity_token", value: form_authenticity_token, autocomplete: "off")
       input(type: :hidden, name: "_method", value: "patch") if @event_venue.persisted?
 
-      div(data: { controller: "venue-details", action: "change->venue-details#update keydown.enter->venue-details#handleEnter" }) do
+      div(data: { controller: "venue-details", action: "change->venue-details#update keydown.enter->venue-details#handleEnter input->venue-details#handleSearchInput" }) do
         FormField do
           FormFieldLabel { "Venue" }
           Combobox(term: @event_venue.venue&.name) do
