@@ -78,6 +78,34 @@ RSpec.describe "EventVenues", type: :system do
         expect(page).to have_css("td", text: "Ceremony")
       end
     end
+
+    # context "with a new venue name not in the list" do
+    #   it "closes the combobox, shows the searched name in the trigger, and reveals the new venue form" do
+    #     click_button "Select a venue"
+    #     find("[data-ruby-ui--combobox-target='searchInput']").fill_in with: "Rooftop Garden"
+    #     expect(page).to have_css("[data-ruby-ui--combobox-target='emptyState']:not(.hidden)")
+
+    #     find("[data-ruby-ui--combobox-target='searchInput']").send_keys(:return)
+
+    #     expect(page).not_to have_css("[data-ruby-ui--combobox-target='popover']:popover-open")
+    #     expect(find("[data-ruby-ui--combobox-target='triggerContent']")).to have_text("Rooftop Garden")
+    #     expect(page).to have_field("venue[name]", with: "Rooftop Garden")
+    #     expect(page).not_to have_css("input[name='event_venue[venue_id]']:checked", visible: false)
+    #   end
+
+    #   it "creates a new venue and assignment when the new venue form is submitted" do
+    #     click_button "Select a venue"
+    #     find("[data-ruby-ui--combobox-target='searchInput']").fill_in with: "Rooftop Garden"
+    #     find("[data-ruby-ui--combobox-target='searchInput']").send_keys(:return)
+
+    #     fill_in "venue[name]", with: "Rooftop Garden"
+    #     find("input#event_venue_role", visible: false).set("ceremony")
+    #     click_button "Assign Venue"
+
+    #     expect(page).to have_current_path(event_venues_path)
+    #     expect(page).to have_css("td", text: "Rooftop Garden")
+    #   end
+    # end
   end
 
   describe "GET /event_venues/:id/edit" do

@@ -29,19 +29,34 @@ export default class extends Controller {
   }
 
   handleEnter(event) {
-    const name = event.target.value.trim()
+    // Only act when the combobox has no matching results (empty state is visible)
+    const emptyState = this.element.querySelector("[data-ruby-ui--combobox-target='emptyState']")
+    if (!emptyState || emptyState.classList.contains("hidden")) return
+
+    const name = event.target.value?.trim()
 
     // Hide read-only details panel
     this.panelTarget.classList.add("hidden")
 
-    if (name.length === 0) {
+    if (!name) {
       this.newVenuePanelTarget.classList.add("hidden")
       return
     }
 
-    // Pre-fill the venue name in the creation panel
-    this.newVenueNameTarget.value = name
+    // Uncheck all venue radio buttons so no venue_id is submitted
+    this.element.querySelectorAll("input[type='radio'][name='event_venue[venue_id]']")
+      .forEach(radio => { radio.checked = false })
 
+    // Close the combobox popover and display the searched name in the trigger
+    const popover        = this.element.querySelector("[data-ruby-ui--combobox-target='popover']")
+    const trigger        = this.element.querySelector("[data-ruby-ui--combobox-target='trigger']")
+    const triggerContent = this.element.querySelector("[data-ruby-ui--combobox-target='triggerContent']")
+    if (popover)        popover.hidePopover()
+    if (trigger)        trigger.ariaExpanded = "false"
+    if (triggerContent) triggerContent.innerText = name
+
+    // Pre-fill the venue name in the creation panel and show it
+    this.newVenueNameTarget.value = name
     this.newVenuePanelTarget.classList.remove("hidden")
   }
 
