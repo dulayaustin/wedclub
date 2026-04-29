@@ -4,7 +4,7 @@ class EventVenuesController < ApplicationController
   before_action :set_event_venue, only: [ :edit, :update, :destroy ]
 
   def index
-    render Views::EventVenues::Index.new(event_venues: current_event.event_venues.includes(:venue))
+    render Views::EventVenues::Index.new(event_venues: current_event.event_venues.includes(:venue).order(:role))
   end
 
   def new
