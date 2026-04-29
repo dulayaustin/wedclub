@@ -49,15 +49,25 @@ class Views::Layouts::Sidebar::Event < Views::Base
             end
           end
           SidebarMenuItem do
-            SidebarMenuButton(as: :a, href: guest_categories_path, active: active_link?(guest_categories_path)) do
-              heroicon "tag", variant: :outline, options: { class: "size-4" }
-              span { "Guest Categories" }
-            end
-          end
-          SidebarMenuItem do
             SidebarMenuButton(as: :a, href: event_venues_path, active: active_link?(event_venues_path)) do
               heroicon "map-pin", variant: :outline, options: { class: "size-4" }
               span { "Venues" }
+            end
+          end
+        end
+      end
+    end
+
+    SidebarSeparator()
+
+    SidebarGroup do
+      SidebarGroupLabel { "Settings" }
+      SidebarGroupContent do
+        SidebarMenu do
+          SidebarMenuItem do
+            SidebarMenuButton(as: :a, href: guest_categories_path, active: active_link?(guest_categories_path)) do
+              heroicon "tag", variant: :outline, options: { class: "size-4" }
+              span { "Guest Categories" }
             end
           end
         end
