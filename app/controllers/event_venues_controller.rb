@@ -17,6 +17,21 @@ class EventVenuesController < ApplicationController
 
   def create
     event_venue = current_event.event_venues.new(event_venue_params)
+
+    if event_venue.venue_id.blank? && params[:venue].present?
+      venue = Venue.new(venue_params)
+      if venue.save
+        event_venue.venue_id = venue.id
+      else
+        render Views::EventVenues::New.new(
+          event_venue: event_venue,
+          venues: Venue.order(:name),
+          available_roles: available_roles
+        ), status: :unprocessable_entity
+        return
+      end
+    end
+
     if event_venue.save
       redirect_to event_venues_path
     else
@@ -65,6 +80,10 @@ class EventVenuesController < ApplicationController
     venue_id = permitted[:venue_id]
     permitted.delete(:venue_id) if venue_id.present? && !Venue.exists?(venue_id.to_i)
     permitted
+  end
+
+  def venue_params
+    params.expect(venue: [ :name, :venue_type, :address_line1, :address_line2, :city, :state, :country, :phone_number, :website ])
   end
 
   def available_roles

@@ -69,7 +69,7 @@ RSpec.describe "EventVenues", type: :system do
 
     context "with valid data" do
       it "creates a venue assignment and redirects to index" do
-        find("input#event_venue_venue_id", visible: false).set(venue.id.to_s)
+        find("input[name='event_venue[venue_id]'][value='#{venue.id}']", visible: false).set(true)
         find("input#event_venue_role", visible: false).set("ceremony")
         click_button "Assign Venue"
 
@@ -100,7 +100,7 @@ RSpec.describe "EventVenues", type: :system do
 
     it "updates the venue assignment" do
       visit edit_event_venue_path(event_venue)
-      find("input#event_venue_venue_id", visible: false).set(venue2.id.to_s)
+      find("input[name='event_venue[venue_id]'][value='#{venue2.id}']", visible: false).set(true)
       click_button "Update Assignment"
 
       expect(page).to have_current_path(event_venues_path)
@@ -128,7 +128,7 @@ RSpec.describe "EventVenues", type: :system do
     it "prevents assigning the same role twice" do
       venue2 = create(:venue, name: "Another Venue")
       visit new_event_venue_path
-      find("input#event_venue_venue_id", visible: false).set(venue2.id.to_s)
+      find("input[name='event_venue[venue_id]'][value='#{venue2.id}']", visible: false).set(true)
       find("input#event_venue_role", visible: false).set("ceremony")
       click_button "Assign Venue"
 
