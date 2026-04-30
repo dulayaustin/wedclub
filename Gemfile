@@ -67,7 +67,7 @@ group :development do
   gem "shoulda-matchers"
   gem "webdrivers", "=5.3.1", require: false
 
-  gem "ruby_ui", "~> 1.1", require: false
+  gem "ruby_ui", "~> 1.2", require: false
 end
 
 gem "phlex-rails", "~> 2.4"
